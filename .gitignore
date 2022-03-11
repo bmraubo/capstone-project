@@ -1,1 +1,6 @@
 /target
+
+/user_service/target/
+/gateway/target/
+
+.env
