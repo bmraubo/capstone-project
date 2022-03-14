@@ -26,10 +26,6 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v1
 
-            - name: Update Docker Compose Version
-              run: |
-                  sudo curl -L https://raw.githubusercontent.com/docker/compose-cli/main/scripts/install/install_linux.sh | sudo sh
-
             - name: Start containers
               run: docker-compose -f "docker-compose.yml" up -d --build
 
