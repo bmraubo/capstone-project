@@ -20,7 +20,7 @@ services:
       - POSTGRES_PASSWORD=postgres
   java_service:
     build: 
-      context: https://github.com/bmraubo/EchoServer.git#main
+      context: ./EchoServer/
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
