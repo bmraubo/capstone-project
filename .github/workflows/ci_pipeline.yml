@@ -23,22 +23,22 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-        - name: Checkout
-        - uses: actions/checkout@v1
+            - name: Checkout
+            - uses: actions/checkout@v1
 
-        - name: Start containers
-            run: docker-compose -f "docker-compose.yml" up -d --build
+            - name: Start containers
+              run: docker-compose -f "docker-compose.yml" up -d --build
 
-        - name: Run API Tests
-            id: run-newman
-            uses: anthonyvscode/newman-action@v1
-            with:
-                collection: Capstone.postman_collection.json
-                reporters: cli
+            - name: Run API Tests
+              id: run-newman
+              uses: anthonyvscode/newman-action@v1
+              with:
+                  collection: Capstone.postman_collection.json
+                  reporters: cli
 
-        - name: Output summary to console
-            run: echo ${{ steps.run-newman.outputs.summary }}
+            - name: Output summary to console
+              run: echo ${{ steps.run-newman.outputs.summary }}
 
-        - name: Stop containers
-            if: always()
-            run: docker-compose -f "docker-compose.yml" down
+            - name: Stop containers
+              if: always()
+              run: docker-compose -f "docker-compose.yml" down
