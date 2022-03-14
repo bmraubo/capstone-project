@@ -2,21 +2,26 @@ version: "3.9"
 services:
   gateway:
     build: 
-      context: ./gateway
+      context: ./gateway/
+      dockerfile: Dockerfile
     ports:
       - "5001:5001"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=test1111
   user_service:
-    build: ./user_service
+    build: 
+      context: ./user_service/
+      dockerfile: Dockerfile
     ports:
       - "5002:5002"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   java_service:
-    build: ./EchoServer
+    build: 
+      context: ./EchoServer/
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
     environment:

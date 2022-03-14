@@ -7,7 +7,7 @@ RUN cargo install --path .
 
 FROM debian:buster-slim
 RUN apt-get update && rm -rf /var/lib/apt/lists/*
-COPY --from=builder ../usr/local/cargo/bin/gateway ../usr/local/bin/gateway
+COPY --from=builder /usr/local/cargo/bin/gateway /usr/local/bin/gateway
 COPY Rocket.toml .
 EXPOSE 5001
 

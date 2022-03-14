@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="site.bmraubo.http_server.TestRouter" tests="2" skipped="0" failures="0" errors="0" timestamp="2022-03-11T15:03:18" hostname="Bartoszs-MacBook-Pro.local" time="0.001">
+  <properties/>
+  <testcase name="addRouteTest()" classname="site.bmraubo.http_server.TestRouter" time="0.0"/>
+  <testcase name="connectTest()" classname="site.bmraubo.http_server.TestRouter" time="0.0"/>
+  <system-out><![CDATA[looking at data
+Data read
+GET /route_spy HTTP/1.1
+
+
+REQUEST StringGET /route_spy HTTP/1.1
+
+
+REQUEST ARRAY[Ljava.lang.String;@74bf1791
+GET /route_spy HTTP/1.1
+No Body Identified
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

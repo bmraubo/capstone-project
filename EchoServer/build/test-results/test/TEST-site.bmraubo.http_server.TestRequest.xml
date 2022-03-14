@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="site.bmraubo.http_server.TestRequest" tests="10" skipped="0" failures="0" errors="0" timestamp="2022-03-11T15:03:18" hostname="Bartoszs-MacBook-Pro.local" time="0.01">
+  <properties/>
+  <testcase name="getMethodTest()" classname="site.bmraubo.http_server.TestRequest" time="0.001"/>
+  <testcase name="RequestHeadersExtractionTest()" classname="site.bmraubo.http_server.TestRequest" time="0.001"/>
+  <testcase name="getBodyTest()" classname="site.bmraubo.http_server.TestRequest" time="0.001"/>
+  <testcase name="RequestLineExtractionTest()" classname="site.bmraubo.http_server.TestRequest" time="0.0"/>
+  <testcase name="getURITest()" classname="site.bmraubo.http_server.TestRequest" time="0.0"/>
+  <testcase name="ReadBufferedStreamTest()" classname="site.bmraubo.http_server.TestRequest" time="0.0"/>
+  <testcase name="getHeadersTest()" classname="site.bmraubo.http_server.TestRequest" time="0.0"/>
+  <testcase name="parseRequestTest()" classname="site.bmraubo.http_server.TestRequest" time="0.0"/>
+  <testcase name="RequestBodyExtractionTest()" classname="site.bmraubo.http_server.TestRequest" time="0.0"/>
+  <testcase name="getProtocolTest()" classname="site.bmraubo.http_server.TestRequest" time="0.0"/>
+  <system-out><![CDATA[looking at data
+Data read
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST StringGET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST ARRAY[Ljava.lang.String;@7d446ed1
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+Body Identified
+Hello World
+looking at data
+Data read
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST StringGET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST ARRAY[Ljava.lang.String;@12d2ce03
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+Body Identified
+Hello World
+looking at data
+Data read
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST StringGET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST ARRAY[Ljava.lang.String;@7e5c856f
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+Body Identified
+Hello World
+looking at data
+Data read
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST StringGET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST ARRAY[Ljava.lang.String;@413f69cc
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+Body Identified
+Hello World
+looking at data
+Data read
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST StringGET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST ARRAY[Ljava.lang.String;@1f53a5dc
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+Body Identified
+Hello World
+looking at data
+Data read
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+looking at data
+Data read
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST StringGET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST ARRAY[Ljava.lang.String;@1b75c2e3
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+Body Identified
+Hello World
+looking at data
+Data read
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST StringGET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST ARRAY[Ljava.lang.String;@1984b1f
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+Body Identified
+Hello World
+looking at data
+Data read
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST StringGET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST ARRAY[Ljava.lang.String;@3bd323e9
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+Body Identified
+Hello World
+looking at data
+Data read
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST StringGET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+
+Hello World
+REQUEST ARRAY[Ljava.lang.String;@39ac0c0a
+GET /simple_get_with_body HTTP/1.1
+Content-Length: 11
+Body Identified
+Hello World
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
