@@ -26,6 +26,10 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v1
 
+            - uses: KengoTODA/actions-setup-docker-compose@main
+              with:
+                  version: "1.25.5"
+
             - name: Start containers
               run: docker-compose -f "docker-compose.yml" up -d --build
 
