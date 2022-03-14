@@ -51,3 +51,11 @@ fn rocket() -> _ {
         ],
     )
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn true_is_true() {
+        assert_eq!(true, true)
+    }
+}

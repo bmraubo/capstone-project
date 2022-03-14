@@ -1,0 +1,6 @@
+[workspace]
+
+members = [
+    "gateway",
+    "user_service"
+]
