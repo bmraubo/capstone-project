@@ -1,5 +1,6 @@
 #[macro_use]
 extern crate rocket;
+extern crate dotenv;
 
 mod authentication;
 mod send_to_service;
@@ -62,6 +63,7 @@ fn register(auth_token: Authentication) -> Status {
 
 #[launch]
 fn rocket() -> _ {
+    dotenv::from_filename(".env").ok();
     rocket::build().mount(
         "/",
         routes![
