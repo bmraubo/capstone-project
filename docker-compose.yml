@@ -7,8 +7,8 @@ services:
     ports:
       - "5001:5001"
     environment:
-      - USER_SERVICE_URL=localhost:5002
-      - JAVA_SERVER_URL=localhost:5000
+      - USER_SERVICE_URL=http://user-service:5002
+      - JAVA_SERVER_URL=http://java-service:5000
   user-service:
     build: 
       context: ./user_service/
@@ -16,7 +16,7 @@ services:
     ports:
       - "5002:5002"
     environment:
-      - TASKS_DATABASE_URL=postgresql://postgres:postgres@user-db:5432/
+      - USER_DATABASE_URL=postgresql://postgres:postgres@user-db:5432/?user=postgres&password=postgres
   java-service:
     build: 
       context: ./EchoServer/
@@ -43,6 +43,7 @@ services:
       retries: 5
     volumes: 
       - user-db:/var/lib/postgresql/data
+      - ./docker/init-user-db.sql:/docker-entrypoint-initdb.d/init-user-db.sql
   tasks-db:
     image: postgres
     restart: always
@@ -53,7 +54,7 @@ services:
       - POSTGRES_PASSWORD=postgres
     volumes: 
       - tasks-db:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init-tasks-db.sql
+      - ./docker/init-tasks-db.sql:/docker-entrypoint-initdb.d/init-tasks-db.sql
 volumes:
   user-db:
     driver: local

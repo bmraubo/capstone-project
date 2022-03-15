@@ -30,24 +30,6 @@ pub fn extract_authentication_hash(token: String) -> String {
         .to_string()
 }
 
-#[derive(Serialize, Deserialize)]
-pub struct CredentialsValidation {
-    credentials_valid: bool,
-    user_tasks: Option<Vec<i32>>,
-}
-
-pub async fn validate_credentials(credentials: String) -> CredentialsValidation {
-    let user_service_url: String = format!(
-        "{}/check_credentials",
-        &env::var("USER_SERVICE_URL").unwrap()
-    );
-    let user_service_response =
-        send_to_service::send_to_user_service(user_service_url, credentials)
-            .await
-            .unwrap();
-    return serde_json::from_str(&user_service_response.text().await.unwrap()).unwrap();
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
