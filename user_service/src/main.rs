@@ -1,6 +1,8 @@
 #[macro_use]
 extern crate rocket;
 
+mod credentials_storage;
+
 use rocket::http::{ContentType, Status};
 
 #[post("/register")]
@@ -16,5 +18,6 @@ fn check_credentials() -> (Status, (ContentType, String)) {
 
 #[launch]
 fn rocket() -> _ {
+    dotenv::from_filename(".env").expect("file not found");
     rocket::build().mount("/", routes![register, check_credentials,])
 }
