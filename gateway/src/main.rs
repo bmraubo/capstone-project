@@ -11,7 +11,7 @@ use rocket::http::{ContentType, Status};
 #[get("/todos")]
 async fn get_all_tasks(auth_token: Authentication) -> (Status, (ContentType, String)) {
     let authentication_hash = extract_authentication_hash(auth_token.token);
-    let validated_credentials = validate_credentials(authentication_hash).await;
+    // let validated_credentials = validate_credentials(authentication_hash).await;
     let response_body = "[{\"id\":\"1\",\"task\":\"a task\",\"done\":\"false\"},{\"id\":\"2\",\"task\":\"another task\",\"done\":\"false\"}]".to_string();
     (Status::Ok, (ContentType::JSON, response_body))
 }
@@ -19,7 +19,7 @@ async fn get_all_tasks(auth_token: Authentication) -> (Status, (ContentType, Str
 #[get("/todo/<id>")]
 async fn get_task_by_id(auth_token: Authentication, id: i32) -> (Status, (ContentType, String)) {
     let authentication_hash = extract_authentication_hash(auth_token.token);
-    let validated_credentials = validate_credentials(authentication_hash).await;
+    // let validated_credentials = validate_credentials(authentication_hash).await;
     let response_body = "{\"id\":\"1\",\"task\":\"a task\",\"done\":\"false\"}".to_string();
     (Status::Ok, (ContentType::JSON, response_body))
 }
@@ -30,7 +30,7 @@ async fn add_task(
     request_body: &str,
 ) -> (Status, (ContentType, String)) {
     let authentication_hash = extract_authentication_hash(auth_token.token);
-    let validated_credentials = validate_credentials(authentication_hash).await;
+    // let validated_credentials = validate_credentials(authentication_hash).await;
     let response_body = "{\"id\":\"3\",\"task\":\"string\",\"done\":\"false\"}".to_string();
     (Status::Created, (ContentType::JSON, response_body))
 }
@@ -42,7 +42,7 @@ async fn update_task(
     request_body: &str,
 ) -> (Status, (ContentType, String)) {
     let authentication_hash = extract_authentication_hash(auth_token.token);
-    let validated_credentials = validate_credentials(authentication_hash).await;
+    // let validated_credentials = validate_credentials(authentication_hash).await;
     let response_body =
         "{\"id\":\"3\",\"task\":\"an updated task\",\"done\":\"false\"}".to_string();
     (Status::Ok, (ContentType::JSON, response_body))
