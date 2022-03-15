@@ -5,44 +5,55 @@ mod send_to_service;
 
 use rocket::http::{ContentType, Status};
 use rocket::request::{FromRequest, Outcome, Request};
+use send_to_service::send_to_user_service;
+use serde::{Deserialize, Serialize};
 use std::convert::Infallible;
+use std::env;
 
 #[get("/todos")]
-fn get_all_tasks(auth_token: Authentication) -> (Status, (ContentType, String)) {
+async fn get_all_tasks(auth_token: Authentication) -> (Status, (ContentType, String)) {
     let authentication_hash = extract_authentication_hash(auth_token.token);
+    let validated_credentials = validate_credentials(authentication_hash).await;
     let response_body = "[{\"id\":\"1\",\"task\":\"a task\",\"done\":\"false\"},{\"id\":\"2\",\"task\":\"another task\",\"done\":\"false\"}]".to_string();
     (Status::Ok, (ContentType::JSON, response_body))
 }
 
 #[get("/todo/<id>")]
-fn get_task_by_id(auth_token: Authentication, id: i32) -> (Status, (ContentType, String)) {
+async fn get_task_by_id(auth_token: Authentication, id: i32) -> (Status, (ContentType, String)) {
     let authentication_hash = extract_authentication_hash(auth_token.token);
+    let validated_credentials = validate_credentials(authentication_hash).await;
     let response_body = "{\"id\":\"1\",\"task\":\"a task\",\"done\":\"false\"}".to_string();
     (Status::Ok, (ContentType::JSON, response_body))
 }
 
 #[post("/todo", data = "<request_body>")]
-fn add_task(auth_token: Authentication, request_body: &str) -> (Status, (ContentType, String)) {
+async fn add_task(
+    auth_token: Authentication,
+    request_body: &str,
+) -> (Status, (ContentType, String)) {
     let authentication_hash = extract_authentication_hash(auth_token.token);
+    let validated_credentials = validate_credentials(authentication_hash).await;
     let response_body = "{\"id\":\"3\",\"task\":\"string\",\"done\":\"false\"}".to_string();
     (Status::Created, (ContentType::JSON, response_body))
 }
 
 #[put("/todo/<id>", data = "<request_body>")]
-fn update_task(
+async fn update_task(
     auth_token: Authentication,
     id: i32,
     request_body: &str,
 ) -> (Status, (ContentType, String)) {
     let authentication_hash = extract_authentication_hash(auth_token.token);
+    let validated_credentials = validate_credentials(authentication_hash).await;
     let response_body =
         "{\"id\":\"3\",\"task\":\"an updated task\",\"done\":\"false\"}".to_string();
     (Status::Ok, (ContentType::JSON, response_body))
 }
 
 #[delete("/todo/<id>")]
-fn delete_task(auth_token: Authentication, id: i32) -> Status {
+async fn delete_task(auth_token: Authentication, id: i32) -> Status {
     let authentication_hash = extract_authentication_hash(auth_token.token);
+    let validated_credentials = validate_credentials(authentication_hash).await;
     Status::NoContent
 }
 
@@ -90,6 +101,23 @@ fn extract_authentication_hash(token: String) -> String {
         .get(1)
         .unwrap()
         .to_string()
+}
+
+#[derive(Serialize, Deserialize)]
+struct CredentialsValidation {
+    credentials_valid: bool,
+    user_tasks: Option<Vec<i32>>,
+}
+
+async fn validate_credentials(credentials: String) -> CredentialsValidation {
+    let user_service_url: String = format!(
+        "{}/check_credentials",
+        &env::var("USER_SERVICE_URL").unwrap()
+    );
+    let user_service_response = send_to_user_service(user_service_url, credentials)
+        .await
+        .unwrap();
+    return serde_json::from_str(&user_service_response.text().await.unwrap()).unwrap();
 }
 
 #[cfg(test)]
