@@ -1,6 +1,8 @@
 #[macro_use]
 extern crate rocket;
 
+mod send_to_service;
+
 use rocket::http::{ContentType, Status};
 
 #[get("/todos")]
