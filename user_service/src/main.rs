@@ -1,11 +1,16 @@
 #[macro_use]
 extern crate rocket;
+extern crate serde;
 
 mod basic_authentication;
 mod credentials_storage;
+mod password;
 
 use basic_authentication::process_authentication;
 use rocket::http::{ContentType, Status};
+use serde::{Deserialize, Serialize};
+
+
 
 #[post("/register", data = "<data>")]
 fn register(data: &str) -> Status {
