@@ -6,9 +6,9 @@ pub struct Credentials {
     pub password: String,
 }
 
-pub fn process_authentication(auth_token: &str) {
+pub fn process_authentication(auth_token: &str) -> Credentials {
     let decoded_token = decode_authentication_hash(auth_token);
-    let user_credentials = parse_credentials(decoded_token);
+    return parse_credentials(decoded_token);
 }
 
 fn decode_authentication_hash(input: &str) -> String {
