@@ -51,7 +51,7 @@ async fn update_task(
 #[delete("/todo/<id>")]
 async fn delete_task(auth_token: Authentication, id: i32) -> Status {
     let authentication_hash = extract_authentication_hash(auth_token.token);
-    let validated_credentials = validate_credentials(authentication_hash).await;
+    // let validated_credentials = validate_credentials(authentication_hash).await;
     Status::NoContent
 }
 
