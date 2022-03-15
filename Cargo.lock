@@ -2548,6 +2548,7 @@ dependencies = [
 name = "user_service"
 version = "0.1.0"
 dependencies = [
+ "base64",
  "dotenv",
  "rocket",
  "serial_test",
