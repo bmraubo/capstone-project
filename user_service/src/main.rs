@@ -5,13 +5,13 @@ mod credentials_storage;
 
 use rocket::http::{ContentType, Status};
 
-#[post("/register")]
-fn register() -> Status {
+#[post("/register", data = "<data>")]
+fn register(data: &str) -> Status {
     Status::Ok
 }
 
-#[post("/check_credentials")]
-fn check_credentials() -> (Status, (ContentType, String)) {
+#[post("/check_credentials", data = "<data>")]
+fn check_credentials(data: &str) -> (Status, (ContentType, String)) {
     let response_body = "user tasks".to_string();
     (Status::Ok, (ContentType::JSON, response_body))
 }
