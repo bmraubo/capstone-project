@@ -1,6 +1,12 @@
 use std::env;
 use tokio_postgres::{Client, NoTls};
 
+struct CredentialCheckOutcome {
+    success: bool,
+    username: Option<String>,
+    tasks: Option<Vec<i32>>,
+}
+
 pub async fn add_user_credentials_to_db(
     client: &mut tokio_postgres::Client,
     username: &str,
