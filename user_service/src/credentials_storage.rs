@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 use std::env;
 use tokio_postgres::{Client, NoTls};
 
-pub struct UserData {
+struct UserData {
     username: String,
     password_hash: String,
     tasks: Vec<i32>,
@@ -28,18 +28,18 @@ pub async fn authenticate_user(credentials: Credentials) -> CheckOutcome {
                 tasks: Some(user_data.tasks),
             }
         } else {
-            CheckOutcome {
-                success: false,
-                username: None,
-                tasks: None,
-            }
+            unauthorised_outcome()
         }
     } else {
-        CheckOutcome {
-            success: false,
-            username: None,
-            tasks: None,
-        }
+        unauthorised_outcome()
+    }
+}
+
+fn unauthorised_outcome() -> CheckOutcome {
+    CheckOutcome {
+        success: false,
+        username: None,
+        tasks: None,
     }
 }
 
@@ -77,7 +77,7 @@ pub async fn add_user_credentials_to_db(
         .await;
 }
 
-pub async fn retrieve_user_data(client: &mut Client, username: &str) -> UserData {
+async fn retrieve_user_data(client: &mut Client, username: &str) -> UserData {
     let prepared_statement = client
         .prepare("SELECT password, tasks FROM user_data WHERE username = $1")
         .await
@@ -95,7 +95,7 @@ pub async fn retrieve_user_data(client: &mut Client, username: &str) -> UserData
     }
 }
 
-pub async fn user_exists(client: &mut Client, username: &str) -> bool {
+async fn user_exists(client: &mut Client, username: &str) -> bool {
     let prepared_statement = client
         .prepare("SELECT username FROM user_data WHERE username=$1")
         .await
@@ -104,7 +104,7 @@ pub async fn user_exists(client: &mut Client, username: &str) -> bool {
     return outcome.unwrap().len() > 0;
 }
 
-pub async fn connect_to_database() -> Client {
+async fn connect_to_database() -> Client {
     let (client, connection) =
         tokio_postgres::connect(&env::var("USER_DATABASE_URL").unwrap(), NoTls)
             .await
