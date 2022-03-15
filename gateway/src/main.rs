@@ -1,14 +1,11 @@
 #[macro_use]
 extern crate rocket;
 
+mod authentication;
 mod send_to_service;
 
+use authentication::{extract_authentication_hash, validate_credentials, Authentication};
 use rocket::http::{ContentType, Status};
-use rocket::request::{FromRequest, Outcome, Request};
-use send_to_service::send_to_user_service;
-use serde::{Deserialize, Serialize};
-use std::convert::Infallible;
-use std::env;
 
 #[get("/todos")]
 async fn get_all_tasks(auth_token: Authentication) -> (Status, (ContentType, String)) {
@@ -78,61 +75,11 @@ fn rocket() -> _ {
     )
 }
 
-pub struct Authentication {
-    pub token: String,
-}
-
-#[rocket::async_trait]
-impl<'r> FromRequest<'r> for Authentication {
-    type Error = Infallible;
-
-    async fn from_request(request: &'r Request<'_>) -> Outcome<Authentication, Infallible> {
-        let auth_token = request.headers().get_one("Authorization");
-        Outcome::Success(Authentication {
-            token: auth_token.unwrap().to_string(),
-        })
-    }
-}
-
-fn extract_authentication_hash(token: String) -> String {
-    token
-        .split(" ")
-        .collect::<Vec<&str>>()
-        .get(1)
-        .unwrap()
-        .to_string()
-}
-
-#[derive(Serialize, Deserialize)]
-struct CredentialsValidation {
-    credentials_valid: bool,
-    user_tasks: Option<Vec<i32>>,
-}
-
-async fn validate_credentials(credentials: String) -> CredentialsValidation {
-    let user_service_url: String = format!(
-        "{}/check_credentials",
-        &env::var("USER_SERVICE_URL").unwrap()
-    );
-    let user_service_response = send_to_user_service(user_service_url, credentials)
-        .await
-        .unwrap();
-    return serde_json::from_str(&user_service_response.text().await.unwrap()).unwrap();
-}
-
 #[cfg(test)]
 mod tests {
-    use super::*;
 
     #[test]
     fn true_is_true() {
         assert_eq!(true, true)
-    }
-
-    #[test]
-    fn can_extract_authentication_hash_from_header() {
-        let token = "BASIC aaaa".to_string();
-        let extracted_value = extract_authentication_hash(token);
-        assert_eq!("aaaa".to_string(), extracted_value);
     }
 }
