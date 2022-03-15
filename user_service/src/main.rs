@@ -7,9 +7,8 @@ mod credentials_storage;
 mod password;
 
 use basic_authentication::process_authentication;
-use credentials_storage::register_user;
+use credentials_storage::{authenticate_user, register_user};
 use rocket::http::{ContentType, Status};
-use serde::{Deserialize, Serialize};
 
 #[post("/register", data = "<data>")]
 async fn register(data: &str) -> Status {
@@ -22,9 +21,10 @@ async fn register(data: &str) -> Status {
 }
 
 #[post("/check_credentials", data = "<data>")]
-fn check_credentials(data: &str) -> (Status, (ContentType, String)) {
-    process_authentication(data);
-    let response_body = "user tasks".to_string();
+async fn check_credentials(data: &str) -> (Status, (ContentType, String)) {
+    let credentials = process_authentication(data);
+    let user_authentication_outcome = authenticate_user(credentials).await;
+    let response_body = serde_json::to_string(&user_authentication_outcome).unwrap();
     (Status::Ok, (ContentType::JSON, response_body))
 }
 
