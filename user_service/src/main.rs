@@ -18,6 +18,6 @@ fn check_credentials(data: &str) -> (Status, (ContentType, String)) {
 
 #[launch]
 fn rocket() -> _ {
-    dotenv::from_filename(".env").expect("file not found");
+    dotenv::from_filename(".env").ok();
     rocket::build().mount("/", routes![register, check_credentials,])
 }

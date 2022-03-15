@@ -74,7 +74,7 @@ mod tests {
     #[tokio::test]
     #[serial]
     async fn test_database_connection() {
-        dotenv::from_filename(".env").expect("file not found");
+        dotenv::from_filename(".env").ok();
         let database_client = connect_to_database().await;
         assert_eq!("tokio_postgres::client::Client", type_of(database_client))
     }
@@ -82,7 +82,7 @@ mod tests {
     #[tokio::test]
     #[serial]
     async fn can_add_credentials_to_credentials_database() {
-        dotenv::from_filename(".env").expect("file not found");
+        dotenv::from_filename(".env").ok();
         let mut database_client = connect_to_database().await;
         create_test_table(&mut database_client).await;
         add_user_credentials_to_db(&mut database_client, "jonny", &"be_good".to_string()).await;
@@ -94,7 +94,7 @@ mod tests {
     #[tokio::test]
     #[serial]
     async fn can_retrieve_passwords() {
-        dotenv::from_filename(".env").expect("file not found");
+        dotenv::from_filename(".env").ok();
         let mut database_client = connect_to_database().await;
         create_test_table(&mut database_client).await;
         add_user_credentials_to_db(&mut database_client, "jonny", &"be_good".to_string()).await;
