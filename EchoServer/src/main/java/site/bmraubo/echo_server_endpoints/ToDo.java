@@ -45,7 +45,7 @@ public class ToDo implements Endpoint {
     }
 
     private boolean validateContentType(Request request) {
-        return request.headers.get("Content-Type").contains("application");
+        return request.headers.get("content-type").contains("application");
     }
 
     private boolean validateValues(Request request) {

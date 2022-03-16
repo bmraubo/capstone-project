@@ -108,7 +108,7 @@ public class RequestBuilder {
     private boolean checkForBody() {
         for (String x : requestArray) {
             System.out.println(x);
-            if (x.startsWith("Content-Length")) {
+            if (x.startsWith("content-length")) {
                 System.out.println("Body Identified");
                 return true;
             }

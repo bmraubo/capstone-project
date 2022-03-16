@@ -125,6 +125,7 @@ async fn user_exists(client: &mut Client, username: &str) -> bool {
 }
 
 pub async fn write_task_list_to_database(client: &mut tokio_postgres::Client, task_info: &AddTask) {
+    println!("Writing to db");
     let prepared_statement = client
         .prepare("UPDATE user_data SET tasks=$1 WHERE username = $2")
         .await

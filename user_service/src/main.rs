@@ -32,9 +32,11 @@ async fn check_credentials(data: &str) -> (Status, (ContentType, String)) {
 
 #[post("/add_task", data = "<data>")]
 async fn add_task(data: &str) -> Status {
+    println!("Add task endpoint start");
     let task_info: AddTask = serde_json::from_str(data).unwrap();
     let mut database_client = connect_to_database().await;
     write_task_list_to_database(&mut database_client, &task_info).await;
+    println!("Add task endpoint end");
     Status::Ok
 }
 
