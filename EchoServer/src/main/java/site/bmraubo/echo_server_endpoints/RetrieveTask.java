@@ -136,7 +136,7 @@ public class RetrieveTask implements Endpoint {
     }
 
     private boolean validateContentType(Request request) {
-        return request.headers.get("content-type").contains("application");
+        return request.headers.get("content-type").contains("application") || request.headers.get("Content-Type").contains("application");
     }
 
     private boolean validateValues(Request request) {
