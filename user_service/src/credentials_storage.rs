@@ -17,6 +17,26 @@ pub struct CheckOutcome {
     tasks: Option<Vec<i32>>,
 }
 
+#[derive(Serialize, Deserialize)]
+pub struct AddTask {
+    username: String,
+    tasks: Vec<i32>,
+}
+
+pub async fn connect_to_database() -> Client {
+    let (client, connection) =
+        tokio_postgres::connect(&env::var("USER_DATABASE_URL").unwrap(), NoTls)
+            .await
+            .unwrap();
+
+    tokio::spawn(async move {
+        if let Err(e) = connection.await {
+            eprintln!("connection error: {}", e);
+        }
+    });
+    client
+}
+
 pub async fn authenticate_user(credentials: Credentials) -> CheckOutcome {
     let mut database_connection = connect_to_database().await;
     if user_exists(&mut database_connection, &credentials.username).await {
@@ -104,18 +124,19 @@ async fn user_exists(client: &mut Client, username: &str) -> bool {
     return outcome.unwrap().len() > 0;
 }
 
-async fn connect_to_database() -> Client {
-    let (client, connection) =
-        tokio_postgres::connect(&env::var("USER_DATABASE_URL").unwrap(), NoTls)
-            .await
-            .unwrap();
-
-    tokio::spawn(async move {
-        if let Err(e) = connection.await {
-            eprintln!("connection error: {}", e);
-        }
-    });
+pub async fn write_task_list_to_database(client: &mut tokio_postgres::Client, task_info: &AddTask) {
+    println!("Writing to db");
+    let prepared_statement = client
+        .prepare("UPDATE user_data SET tasks=$1 WHERE username = $2")
+        .await
+        .unwrap();
     client
+        .query(
+            &prepared_statement,
+            &[&task_info.tasks, &task_info.username],
+        )
+        .await
+        .ok();
 }
 
 #[cfg(test)]
@@ -254,5 +275,26 @@ mod tests {
         let authentication_outcome = authenticate_user(bad_credentials).await;
         drop_table(&mut database_client).await;
         assert!(!authentication_outcome.success)
+    }
+
+    #[tokio::test]
+    #[serial]
+    async fn can_write_task_list_to_database() {
+        dotenv::from_filename(".env").ok();
+        let mut database_client = connect_to_database().await;
+        create_test_table(&mut database_client).await;
+        let credentials = Credentials {
+            username: "jonny".to_string(),
+            password: "be_good".to_string(),
+        };
+        register_user(&credentials).await;
+        let new_task_list = AddTask {
+            username: "jonny".to_string(),
+            tasks: vec![1, 2],
+        };
+        write_task_list_to_database(&mut database_client, &new_task_list).await;
+        let authentication_outcome = authenticate_user(credentials).await;
+        drop_table(&mut database_client).await;
+        assert_eq!(authentication_outcome.tasks.unwrap(), new_task_list.tasks)
     }
 }

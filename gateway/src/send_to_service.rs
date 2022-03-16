@@ -10,10 +10,12 @@ pub async fn send_to_user_service(
 }
 
 pub async fn add_task(url: String, body: String) -> Result<reqwest::Response, reqwest::Error> {
+    println!("Add task request");
     let client = reqwest::Client::new();
     let response = client
         .post(&url)
-        .header("content-type", "application/json; charset=UTF-8")
+        .header("Content-Type", "application/json; charset=UTF-8")
+        .header("Content-Length", body.chars().count())
         .body(body)
         .send()
         .await?;
@@ -30,7 +32,8 @@ pub async fn update_task(url: String, body: String) -> Result<reqwest::Response,
     let client = reqwest::Client::new();
     let response = client
         .put(&url)
-        .header("content-type", "application/json; charset=UTF-8")
+        .header("Content-Type", "application/json; charset=UTF-8")
+        .header("Content-Length", body.chars().count())
         .body(body)
         .send()
         .await?;
