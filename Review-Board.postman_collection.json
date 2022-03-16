@@ -1,0 +1,355 @@
+{
+	"info": {
+		"_postman_id": "b2d1ab80-b883-472c-bdf6-eeacb57d2c77",
+		"name": "Capstone-Production",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Registration Prod",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWE6YmI=",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "https://capstone-gateway.herokuapp.com/register",
+					"protocol": "https",
+					"host": [
+						"capstone-gateway",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Task Prod",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWE6YmI=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"task\": \"a string\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://capstone-gateway.herokuapp.com/todo",
+					"protocol": "https",
+					"host": [
+						"capstone-gateway",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task by ID Prod",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWE6YmI=",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://capstone-gateway.herokuapp.com/todo/1",
+					"protocol": "https",
+					"host": [
+						"capstone-gateway",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todo",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Task 2 Prod",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWE6YmI=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"task\": \"another string\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://capstone-gateway.herokuapp.com/todo",
+					"protocol": "https",
+					"host": [
+						"capstone-gateway",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View All Tasks Prod",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status Code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"})",
+							"",
+							"pm.test(\"Returns list of Json\", function () {",
+							"    var responseJson = pm.response.json();",
+							"    //pm.expect(responseJson).to.eq([{id: \"1\", task: \"a task\", done: \"false\"},{id: \"2\", task: \"another task\", done: \"false\"}]);",
+							"    pm.expect(responseJson[0].id).to.eq(1);",
+							"    pm.expect(responseJson[0].task).to.eq(\"a string\");",
+							"    pm.expect(responseJson[0].done).to.eq(false);",
+							"    pm.expect(responseJson[1].id).to.eq(2);",
+							"    pm.expect(responseJson[1].task).to.eq(\"another string\");",
+							"    pm.expect(responseJson[1].done).to.eq(false);",
+							"})",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWE6YmI=",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://capstone-gateway.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"capstone-gateway",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Task Prod",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWE6YmI=",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://capstone-gateway.herokuapp.com/todo/2",
+					"protocol": "https",
+					"host": [
+						"capstone-gateway",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todo",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "View All Tasks after Deletion Prod",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWE6YmI=",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://capstone-gateway.herokuapp.com/todos",
+					"protocol": "https",
+					"host": [
+						"capstone-gateway",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Task Prod",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWE6YmI=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\": \"1\", \"task\": \"updated task\", \"done\": \"false\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://capstone-gateway.herokuapp.com/todo/1",
+					"protocol": "https",
+					"host": [
+						"capstone-gateway",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"todo",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
