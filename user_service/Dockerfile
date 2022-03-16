@@ -7,6 +7,7 @@ RUN cargo install --path .
 
 FROM debian:buster-slim
 RUN apt-get update && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get -y install openssl
 COPY --from=builder /usr/local/cargo/bin/user_service /usr/local/bin/user_service
 COPY Rocket.toml .
 EXPOSE 5002
