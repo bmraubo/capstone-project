@@ -1,8 +1,10 @@
 use crate::basic_authentication::Credentials;
 use crate::password;
+use native_tls::TlsConnector;
+use postgres_native_tls::MakeTlsConnector;
 use serde::{Deserialize, Serialize};
 use std::env;
-use tokio_postgres::{Client, NoTls};
+use tokio_postgres::Client;
 
 struct UserData {
     username: String,
@@ -24,8 +26,14 @@ pub struct AddTask {
 }
 
 pub async fn connect_to_database() -> Client {
+    let connector = TlsConnector::builder()
+        .danger_accept_invalid_certs(true)
+        .build()
+        .expect("create a TLS connector");
+    let connector = MakeTlsConnector::new(connector);
+
     let (client, connection) =
-        tokio_postgres::connect(&env::var("USER_DATABASE_URL").unwrap(), NoTls)
+        tokio_postgres::connect(&env::var("USER_DATABASE_URL").unwrap(), connector)
             .await
             .unwrap();
 

@@ -1,5 +1,7 @@
 #[macro_use]
 extern crate rocket;
+extern crate native_tls;
+extern crate postgres_native_tls;
 extern crate serde;
 
 mod basic_authentication;
