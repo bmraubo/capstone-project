@@ -1,0 +1,1 @@
+web: ROCKET_PORT=$PORT USER_SERVICE_URL=https://capstone-users-service.herokuapp.com JAVA_SERVER_URL=https://capstone-java-service.herokuapp.com ROCKET_KEEP_ALIVE=0 ./target/release/capstone-gateway

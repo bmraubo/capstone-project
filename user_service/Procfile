@@ -1,0 +1,1 @@
+web: ROCKET_PORT=$PORT USER_DATABASE_URL=$DATABASE_URL ROCKET_KEEP_ALIVE=0 ./target/release/capstone-user-service
