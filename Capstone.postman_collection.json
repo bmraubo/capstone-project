@@ -49,7 +49,60 @@
 			"response": []
 		},
 		{
-			"name": "Update Task",
+			"name": "Add Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status Code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"})",
+							"",
+							"pm.test(\"Returns id, task details and done status\", function () {",
+							"    var responseJson = pm.response.json();",
+							"    pm.expect(responseJson.id).to.eq(1);",
+							"    pm.expect(responseJson.task).to.eq(\"a string\");",
+							"    pm.expect(responseJson.done).to.eq(false);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWE6YmI=",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"task\": \"a string\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:5001/todo",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"todo"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task by ID",
 			"event": [
 				{
 					"listen": "test",
@@ -62,7 +115,7 @@
 							"pm.test(\"Returns id, task details and done status\", function () {",
 							"    var responseJson = pm.response.json();",
 							"    pm.expect(responseJson.id).to.eq(1);",
-							"    pm.expect(responseJson.task).to.eq(\"updated task\");",
+							"    pm.expect(responseJson.task).to.eq(\"a string\");",
 							"    pm.expect(responseJson.done).to.eq(false);",
 							"})"
 						],
@@ -71,7 +124,7 @@
 				}
 			],
 			"request": {
-				"method": "PUT",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Authorization",
@@ -79,15 +132,6 @@
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\"id\": \"1\", \"task\": \"updated task\", \"done\": \"false\"}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "localhost:5001/todo/1",
 					"host": [
@@ -103,14 +147,21 @@
 			"response": []
 		},
 		{
-			"name": "Delete Task",
+			"name": "Add Task 2",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
 						"exec": [
-							"pm.test(\"Status Code is 204\", function () {",
-							"    pm.response.to.have.status(204);",
+							"pm.test(\"Status Code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"})",
+							"",
+							"pm.test(\"Returns id, task details and done status\", function () {",
+							"    var responseJson = pm.response.json();",
+							"    pm.expect(responseJson.id).to.eq(2);",
+							"    pm.expect(responseJson.task).to.eq(\"another string\");",
+							"    pm.expect(responseJson.done).to.eq(false);",
 							"})"
 						],
 						"type": "text/javascript"
@@ -118,7 +169,7 @@
 				}
 			],
 			"request": {
-				"method": "DELETE",
+				"method": "POST",
 				"header": [
 					{
 						"key": "Authorization",
@@ -126,15 +177,23 @@
 						"type": "text"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"task\": \"another string\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "localhost:5001/todo/2",
+					"raw": "localhost:5001/todo",
 					"host": [
 						"localhost"
 					],
 					"port": "5001",
 					"path": [
-						"todo",
-						"2"
+						"todo"
 					]
 				}
 			},
@@ -190,6 +249,44 @@
 			"response": []
 		},
 		{
+			"name": "Delete Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status Code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Basic YWE6YmI=",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "localhost:5001/todo/2",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"todo",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
 			"name": "View All Tasks after Deletion",
 			"event": [
 				{
@@ -236,7 +333,7 @@
 			"response": []
 		},
 		{
-			"name": "Task by ID",
+			"name": "Update Task",
 			"event": [
 				{
 					"listen": "test",
@@ -249,7 +346,7 @@
 							"pm.test(\"Returns id, task details and done status\", function () {",
 							"    var responseJson = pm.response.json();",
 							"    pm.expect(responseJson.id).to.eq(1);",
-							"    pm.expect(responseJson.task).to.eq(\"a string\");",
+							"    pm.expect(responseJson.task).to.eq(\"updated task\");",
 							"    pm.expect(responseJson.done).to.eq(false);",
 							"})"
 						],
@@ -258,7 +355,7 @@
 				}
 			],
 			"request": {
-				"method": "GET",
+				"method": "PUT",
 				"header": [
 					{
 						"key": "Authorization",
@@ -266,6 +363,15 @@
 						"type": "text"
 					}
 				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"id\": \"1\", \"task\": \"updated task\", \"done\": \"false\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "localhost:5001/todo/1",
 					"host": [
@@ -275,112 +381,6 @@
 					"path": [
 						"todo",
 						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add Task",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status Code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
-							"})",
-							"",
-							"pm.test(\"Returns id, task details and done status\", function () {",
-							"    var responseJson = pm.response.json();",
-							"    pm.expect(responseJson.id).to.eq(1);",
-							"    pm.expect(responseJson.task).to.eq(\"a string\");",
-							"    pm.expect(responseJson.done).to.eq(false);",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic YWE6YmI=",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"task\": \"a string\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:5001/todo",
-					"host": [
-						"localhost"
-					],
-					"port": "5001",
-					"path": [
-						"todo"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Add Task 2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Status Code is 201\", function () {",
-							"    pm.response.to.have.status(201);",
-							"})",
-							"",
-							"pm.test(\"Returns id, task details and done status\", function () {",
-							"    var responseJson = pm.response.json();",
-							"    pm.expect(responseJson.id).to.eq(2);",
-							"    pm.expect(responseJson.task).to.eq(\"another string\");",
-							"    pm.expect(responseJson.done).to.eq(false);",
-							"})"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Authorization",
-						"value": "Basic YWE6YmI=",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"task\": \"another string\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "localhost:5001/todo",
-					"host": [
-						"localhost"
-					],
-					"port": "5001",
-					"path": [
-						"todo"
 					]
 				}
 			},
