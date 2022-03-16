@@ -15,6 +15,10 @@ serde = "1.0.130"
 serde_json = "1.0.59"
 rust-argon2 = "1.0"
 rand = "0.8.5"
+openssl = "0.10.38"
+postgres-openssl = "0.5.0"
+native-tls = "0.2.8"
+postgres-native-tls = "0.5.0"
 
 [dev-dependencies]
 serial_test = "0.6.0"
